@@ -1,0 +1,213 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                    sans-serif;
+    font-size: 14px;
+}
+
+.canvas-container {
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.canvas-top-navbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 55px;
+    background-color: #37464F;
+    z-index: 999;
+}
+
+.canvas-area-container {
+    position: relative;
+    height: 100%;
+    margin: 0 0 0 20%;
+    padding: 0 16px;
+}
+
+.canvas-area-container-wide {
+    margin: 55px 0 55px 38px;
+}
+
+.canvas-area-container .component-message-to-drop {
+    top: 15%;
+    left: 55%;
+    transform: translate(-55%, -15%);
+    position: absolute;
+}
+
+.component-search-list-container .component-content {
+    background-color: #FFFFFF;
+    padding: 14px;
+    display: none;
+    justify-content: space-evenly;
+}
+
+.component-search-list-container .show-components-list {
+    display: flex;
+}
+
+.component-search-list-container .component-content .draggable-source-component {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 8px;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    font-size: 14px;
+}
+
+.component-search-list-container .component-content .draggable-source-component svg {
+    height: 14px;
+    margin: 0 0 4px 0;
+}
+
+.component-search-list-container .no-results-found-container {
+    padding: 32px 16px;
+}
+
+.canvas-component-sidebar-container {
+    position: fixed;
+    height: calc(100vh - 55px);
+    width: 25%;
+    top: 55px;
+    left: 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    z-index: 999;
+}
+
+.canvas-component-sidebar-container .components-tab-container {
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #F6F6F6;
+}
+
+.show-components-tab {
+    width: 20%;
+}
+
+.show-components-tab .components-tab-container {
+    display: block;
+}
+
+.canvas-component-sidebar-container .components-tab-container .search-container {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #C2C2C2;
+    display: flex;
+    flex-flow: row;
+}
+
+.canvas-component-sidebar-container .components-tab-container .search-container input[type=text] {
+    padding: 14px 24px 12px 14px;
+    border: none;
+    outline: none;
+    color: #C2C2C2;
+    width: 100%;
+}
+
+.canvas-component-sidebar-container .components-tab-container .search-container svg {
+    transform: rotate(90deg);
+    color: #A6ABAB;
+    position: absolute;
+    right: 40px;
+    top: 14px;
+    height: 14px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container {
+    width: 100%;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    padding: 14px;
+    color: #C2C2C2;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-header .component-label {
+    color: #A6ABAB;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-header .component-control .component-count {
+    margin: 0 8px 0 0;
+    font-size: 14px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-header .component-control svg {
+    height: 16px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-control {
+    display: flex;
+    align-items: center;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content {
+    background-color: #FFFFFF;
+    padding: 14px;
+    display: none;
+    justify-content: space-evenly;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .show-components-list {
+    display: flex;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 8px;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    font-size: 14px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component svg {
+    height: 14px;
+    margin: 0 0 4px 0;
+}
+
+.canvas-component-sidebar-container .toggable-menu {
+    height: 100%;
+    background-color: #ECECEC;
+    border-left: 1px solid #C2C2C2;
+    border-right: 1px solid #C2C2C2;
+}
+
+.canvas-component-sidebar-container .toggable-menu button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 12px;
+    color: #C2C2C2;
+}
+
+.canvas-component-sidebar-container .toggable-menu .top-button {
+    border-bottom: 1px solid #C2C2C2;
+}
+
+.canvas-component-sidebar-container .toggable-menu button svg {
+    height: 14px;
+}
+
