@@ -1,3 +1,4 @@
+/** HTML ELEMENTS */
 const componentTabContainer = document.getElementById('component_tab_container');
 const componentListTab = document.getElementById('component_list_tab');
 const componentListCount = document.getElementById('component_list_count');
@@ -10,9 +11,11 @@ const componentSearchListContainer = document.getElementById('component_search_l
 const canvasAreaContainer = document.getElementById('canvas_area_container');
 const searchBarIcon = document.getElementById('search_bar_icon');
 
+/** INITIALIZERS */
 let isSearching = false;
 let searchResult = null;
 
+/** CONSTANTS */
 const componentsList = [
     {
         _id: 1,
@@ -46,12 +49,12 @@ const componentsList = [
     }
 ];
 
+/** FUNCTIONS */
 const searchComponentByKeyword = (keyword) => {
     return componentsList.filter(component => new RegExp(`${keyword}`, 'gi').test(component.name) === true);
 }
 
-componentListCount.innerHTML = componentsList ? componentsList.length : 0;
-
+/** EVENT LISTENERS */
 searchKeywordTextField.addEventListener('keyup', e => {
     let value = e.target.value;
 
@@ -117,4 +120,13 @@ toggleComponentTabButton.addEventListener('click', e => {
         componentTabContainer.classList.add('show-components-tab');
         canvasAreaContainer.classList.remove('canvas-area-container-wide');
     }
+});
+
+/** PAGE LOAD INITIALIZATION */
+document.addEventListener("DOMContentLoaded", function() {
+    componentListCount.innerHTML = componentsList ? componentsList.length : 0;
+    componentListTab.innerHTML = componentsList.map(component => (`<div  class="draggable-source-component" role="source" draggable="true" style="opacity: 1;">
+                                                                        ${component.logoName}
+                                                                        <span class="label">${component.name}</span>
+                                                                    </div>`)).join("\n");
 });
