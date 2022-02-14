@@ -144,7 +144,6 @@ html, body {
     justify-content: space-between;
     padding: 14px;
     color: #C2C2C2;
-    cursor: pointer;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
