@@ -204,6 +204,8 @@ html, body {
     background-color: #ECECEC;
     border-left: 1px solid #C2C2C2;
     border-right: 1px solid #C2C2C2;
+    display: flex;
+    flex-flow: column;
 }
 
 .canvas-component-sidebar-container .toggable-menu button {
@@ -316,4 +318,16 @@ html, body {
 
 .whitespace {
     height: 60px;
+}
+
+#play_automation {
+    color:#17A05D;
+}
+
+#save_progress {
+    color: #20323F;
+}
+
+#clear_canvas { 
+    color: #90999F;
 }
