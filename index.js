@@ -17,40 +17,7 @@ let isSearching = false;
 let searchResult = null;
 
 /** CONSTANTS */
-const componentsList = [
-    {
-        _id: 1,
-        type: "START_COMPONENT",
-        name: "Start",
-        logoName: `<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" class="svg-inline--fa fa-play fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                        <path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path>
-                    </svg>`,
-        properties: {
-            startingComponent: true,
-            calledOnce: true,
-            connectedAfter: true,
-            connectedBefore: false,
-            canBeReplaced: false
-        }
-    },
-    {
-        _id: 2,
-        type: "END_COMPONENT",
-        name: "End",
-        logoName: `<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="stop" class="svg-inline--fa fa-stop fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                        <path fill="currentColor" d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z"></path>
-                    </svg>`,
-        properties: {
-            startingComponent: false,
-            calledOnce: true,
-            connectedAfter: false,
-            connectedBefore: true,
-            canBeReplaced: false
-        }
-    }
-];
-
-const componentsList2 = {
+const componentsList = {
     "DEFAULT": [
         {
             _id: 1,
@@ -251,7 +218,7 @@ const componentsList2 = {
 
 /** FUNCTIONS */
 const searchComponentByKeyword = (keyword) => {
-    return Object.keys(componentsList2).flatMap(list => [...componentsList2[list]]).filter(component => new RegExp(`${keyword}`, 'gi').test(component.name) === true);
+    return Object.keys(componentsList).flatMap(list => [...componentsList[list]]).filter(component => new RegExp(`${keyword}`, 'gi').test(component.name) === true);
 }
 
 /** EVENT LISTENERS */
@@ -317,22 +284,29 @@ toggleComponentTabButton.addEventListener('click', e => {
 /** PAGE LOAD INITIALIZATION */
 document.addEventListener("DOMContentLoaded", function() {
     componentsToggableTabContainer.innerHTML = `<div class="components-toggable-tab" id="components_toggable_tab">
-                                                    ${ Object.keys(componentsList2).map(list => `<div class="components-toggable-tab" id="components_toggable_tab">
+                                                    ${ Object.keys(componentsList).map(list => `<div class="components-toggable-tab" id="components_toggable_tab">
                                                         <div class="component-header" id="toggle_component_header_${list}">
                                                             <span class="component-label">${list}</span>
                                                             <div class="component-control">
-                                                                <span class="component-count" id="component_list_count">${componentsList2[list].length}</span>
+                                                                <span class="component-count" id="component_list_count">${componentsList[list].length}</span>
                                                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" class="svg-inline--fa fa-chevron-right fa-w-10 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                                                     <path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path>
                                                                 </svg>
                                                             </div>
                                                         </div>
                                                         <div class="component-content show-components-list toggle_component_header_${list}">
-                                                        ${componentsList2[list].map(component => `<div class="draggable-source-component" role="source" draggable="true" title="${component.description}">
+                                                        ${componentsList[list].map(component => `<div class="draggable-source-component" role="source" draggable="true" title="${component.description}">
                                                                                                         ${component.logoName}
                                                                                                         <span class="label">${component.name}</span>
                                                                                                     </div>`).join("\n")}
                                                             </div>
                                                         </div>`).join("\n") }
                                                 </div>`;
+    canvasAreaContainer.innerHTML = `<div class="target-component-container">
+                                        <div role="target" class="target-component-empty">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>`;
 });

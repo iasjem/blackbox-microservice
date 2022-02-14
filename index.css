@@ -223,3 +223,93 @@ html, body {
     height: 14px;
 }
 
+.canvas-area-container .target-component-container {
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    padding: 1rem;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='gray' stroke-width='4' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.canvas-area-container-wide .target-component-container {
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+}
+
+.canvas-area-container .with-component {
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='4' stroke-dasharray='' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.canvas-area-container .target-component {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.canvas-area-container .target-component span {
+    font-size: 1rem;
+    color: black;
+}
+
+.canvas-area-container .target-component svg {
+    height: 38px;
+    margin-bottom: 4px;
+    color: black;
+}
+
+.canvas-area-container .target-component-empty {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.canvas-area-container .target-component-empty svg {
+    height: 38px;
+    color: gray;
+}
+
+.canvas-area-container .target-component-arrow-down {
+    position: absolute;
+    top: 15%;
+    left: 54.8%;
+    transform: translate(-50%, -15%);
+    width: 50px;
+}
+
+.canvas-area-container .target-component-arrow-down .line {
+    position: relative;
+    width: 3px;
+    height: 60px;
+    background-color: #000;
+    margin: auto;
+}
+
+.canvas-area-container .target-component-arrow-down .triangle {
+    margin: auto;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #2f2f2f;
+    font-size: 0;
+    line-height: 0;
+    z-index: 1;
+}
+
+.canvas-area-container-wide .target-component-arrow-down {
+    left: 50%;
+}
