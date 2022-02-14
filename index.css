@@ -259,12 +259,13 @@ html, body {
 }
 
 .canvas-area-container .target-component span {
-    font-size: 1rem;
+    font-size: 10px;
     color: black;
+    text-align: center;
 }
 
 .canvas-area-container .target-component svg {
-    height: 38px;
+    height: 24px;
     margin-bottom: 4px;
     color: black;
 }
@@ -285,7 +286,7 @@ html, body {
 .canvas-area-container .target-component-arrow-down {
     position: absolute;
     top: 15%;
-    left: 54.8%;
+    left: 50%;
     transform: translate(-50%, -15%);
     width: 50px;
 }
@@ -312,4 +313,8 @@ html, body {
 
 .canvas-area-container-wide .target-component-arrow-down {
     left: 50%;
+}
+
+.whitespace {
+    height: 60px;
 }
