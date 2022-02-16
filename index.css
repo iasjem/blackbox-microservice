@@ -246,6 +246,9 @@ html, body {
 
 .canvas-area-container .with-component {
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='4' stroke-dasharray='' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }
 
 .canvas-area-container .target-component {
@@ -254,9 +257,6 @@ html, body {
     flex-flow: column;
     align-items: center;
     justify-content: center;
-    cursor: grab;
-    cursor: -moz-grab;
-    cursor: -webkit-grab;
 }
 
 .canvas-area-container .target-component span {

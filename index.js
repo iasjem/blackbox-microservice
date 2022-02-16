@@ -237,6 +237,80 @@ function uuidv4 () {
     });
 }
 
+function findIndexFromArrayById (id, arr) {
+    return arr.findIndex(component => component._id === id);
+}
+
+function moveInArray (arr, from, to) {
+    var item = arr.splice(from, 1);
+    arr.splice(to, 0, item[0]);
+}
+
+function loadDroppedComponentsList (arr) {
+    var targetComponent = arr.map(function (component, index) {
+        var spaceBetweenComponents = index * 150;
+        var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
+
+        return '<div class="target-component-container with-component" id="' + component._id + '" style="top: calc(15% + ' + spaceBetweenComponents + 'px);" title="' + component.type + '" draggable="true" ondragstart="dragDroppedComponent(event)" ondragover="allowDropSource(event)" ondrop=\"dropToAnotherComponent(event)\"> \
+                    <div role="target" class="target-component"> \
+                        ' + component.logoName + ' \
+                        <span class="label">' + component.name + '</span> \
+                    </div> \
+                    ' + (component.properties.connectedAfter ? '' : '<div class="whitespace"></div>') + '</div>'
+                    + (index > 0 ? '<div class="target-component-arrow-down" style="top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);"> \
+                    <div class="line"></div> \
+                    <div class="triangle"></div> \
+                </div>' : '')}).join("\n");
+
+    var emptyTargetComponent = arr[arr.length - 1].properties.connectedAfter ? 
+                                '<div class="target-component-container" style="top: calc(15% + ' + arr.length * 150 + 'px" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
+                                        <div role="target" class="target-component-empty"> \
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
+                                            <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
+                                            </svg> \
+                                        </div> \
+                                        <div class="whitespace"></div> \
+                                    </div>' : '';
+
+    return targetComponent + emptyTargetComponent;
+}
+
+function loadEmptyCanvas () {
+    return '<div class=\"target-component-container\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
+                <div role=\"target" class="target-component-empty\"> \
+                    <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
+                    <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
+                    </svg> \
+                </div> \
+            </div>';
+}
+
+function loadComponentsListTab () {
+    var component = Object.keys(componentsList).map(function (list) {
+        var componentListCount = '<span class\="component-count\" id=\"component_list_count\">' + componentsList[list].length + '</span>';
+        var components = componentsList[list].map(function (component, i) {
+                                                    return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role="source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
+                                                            ' + component.logoName + '<span class=\"label\">' + component.name + '</span> \
+                                                        </div>';
+                                                }).join("\n");
+
+            return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\"> \
+                        <div class=\"component-header\" id=\"toggle_component_header_' + list + '\"> \
+                            <span class=\"component-label\">' + list + '</span> \
+                            <div class=\"component-control\"> \
+                                <span class=\"component-count\" id=\"component_list_count\">' + componentListCount + '</span> \
+                                <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" class=\"svg-inline--fa fa-chevron-right fa-w-10 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"> \
+                                    <path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path> \
+                                </svg> \
+                            </div> \
+                        </div> \
+                        <div class=\"component-content show-components-list toggle_component_header_' + list + '\"> ' + components + ' </div> \
+                    </div>';
+    }).join("\n"); 
+
+    return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\">' + component + '</div>';
+}
+
 function searchComponentByKeyword (keyword) {
     return Object.keys(componentsList).flatMap(function (list) {
                 return [].concat(componentsList[list]);
@@ -271,34 +345,28 @@ function dropToCanvas (e) {
 
         droppedComponents.push(droppedComponent);
 
-        var targetComponent = droppedComponents.map(function (component, index) {
-            var spaceBetweenComponents = index * 150;
-            var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
-
-            return '<div class="target-component-container with-component" id="' + component._id + '" style="top: calc(15% + ' + spaceBetweenComponents + 'px);" ondragstart="dragDroppedComponent(event)" ondragover="allowDropSource(event)"> \
-                        <div role="target" class="target-component" title="' + component.type + '" draggable="true"> \
-                            ' + component.logoName + ' \
-                            <span class="label">' + component.name + '</span> \
-                        </div> \
-                        ' + (component.properties.connectedAfter ? '' : '<div class="whitespace"></div>') + '</div>'
-                        + (index > 0 ? '<div class="target-component-arrow-down" style="top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);"> \
-                        <div class="line"></div> \
-                        <div class="triangle"></div> \
-                    </div>' : '')}).join("\n");
-
-        var emptyTargetComponent = droppedComponents[droppedComponents.length - 1].properties.connectedAfter ? 
-                                    '<div class="target-component-container" style="top: calc(15% + ' + droppedComponents.length * 150 + 'px" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
-                                            <div role="target" class="target-component-empty"> \
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
-                                                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
-                                                </svg> \
-                                            </div> \
-                                            <div class="whitespace"></div> \
-                                        </div>' : '';
-
-        canvasAreaContainer.innerHTML = targetComponent + emptyTargetComponent;
+        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
     } else {
         alert('Workflow must begin with a START component when there are no other components inside the canvas.');
+    }
+}
+
+function dropToAnotherComponent (e) {
+    var componentInPosition = e.currentTarget.id;
+    var componentInPositionIndex = findIndexFromArrayById(componentInPosition, droppedComponents);
+    var componentInPositionProperties = droppedComponents[componentInPositionIndex].properties;
+    var componentInPositionSortable = componentInPositionProperties.connectedAfter && componentInPositionProperties.connectedBefore;
+
+    var selectedComponent = e.dataTransfer.getData('dropped_component');
+    var selectedComponentIndex = findIndexFromArrayById(selectedComponent, droppedComponents);
+    var selectedComponentProperties = droppedComponents[selectedComponentIndex].properties;
+    var selectedComponentSortable = selectedComponentProperties.connectedAfter && selectedComponentProperties.connectedBefore;
+    
+    if (componentInPositionSortable && selectedComponentSortable) {
+        moveInArray(droppedComponents, selectedComponentIndex, componentInPositionIndex);
+        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+    } else {
+        alert('Cannot sort START/END components inside the canvas.');
     }
 }
 
@@ -372,13 +440,7 @@ clearCanvasButton.addEventListener('click', function (e) {
 
         droppedComponents = [];
 
-        canvasAreaContainer.innerHTML = '<div class="target-component-container" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
-                                            <div role="target" class="target-component-empty"> \
-                                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
-                                                    <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
-                                                    </svg> \
-                                                </div> \
-                                            </div>';
+        canvasAreaContainer.innerHTML = loadEmptyCanvas();
     }
 });
 
@@ -386,68 +448,13 @@ clearCanvasButton.addEventListener('click', function (e) {
 document.addEventListener('DOMContentLoaded', function() {
     var currentProgress = JSON.parse(localStorage.getItem("blackbox_progress")); // get saved progress from localstorage
 
-    var component = Object.keys(componentsList).map(function (list) {
-        var componentListCount = '<span class\="component-count\" id=\"component_list_count\">' + componentsList[list].length + '</span>';
-        var components = componentsList[list].map(function (component, i) {
-                                                    return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role="source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
-                                                            ' + component.logoName + '<span class=\"label\">' + component.name + '</span> \
-                                                        </div>';
-                                                }).join("\n");
-
-            return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\"> \
-                        <div class=\"component-header\" id=\"toggle_component_header_' + list + '\"> \
-                            <span class=\"component-label\">' + list + '</span> \
-                            <div class=\"component-control\"> \
-                                <span class=\"component-count\" id=\"component_list_count\">' + componentListCount + '</span> \
-                                <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"chevron-right\" class=\"svg-inline--fa fa-chevron-right fa-w-10 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"> \
-                                    <path fill=\"currentColor\" d=\"M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z\"></path> \
-                                </svg> \
-                            </div> \
-                        </div> \
-                        <div class=\"component-content show-components-list toggle_component_header_' + list + '\"> ' + components + ' </div> \
-                    </div>';
-    }).join("\n"); 
-
-    componentsToggableTabContainer.innerHTML = '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\">' + component + '</div>';
+    componentsToggableTabContainer.innerHTML = loadComponentsListTab();
 
     if (currentProgress && currentProgress.length > 0) {
         droppedComponents = currentProgress;
 
-        var targetComponent = droppedComponents.map(function (component, index) {
-                                    var spaceBetweenComponents = index * 150;
-                                    var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
-
-                                    return '<div class=\"target-component-container with-component\" id=\"' + component._id + '\" style=\"top: calc(15% + ' + spaceBetweenComponents + 'px);\" ondragstart=\"dragDroppedComponent(event)\" ondragover=\"allowDropSource(event)\"> \
-                                            <div role=\"target\" class=\"target-componen\t" title=\"' + component.type + '\" draggable=\"true\"> \
-                                                ' + component.logoName + ' \
-                                                <span class=\"label\">' + component.name + '</span> \
-                                            </div> \
-                                            ' + (component.properties.connectedAfter ? '' : '<div class=\"whitespace\"></div>') + '</div>'
-                                            + (index > 0 ? '<div class=\"target-component-arrow-down\" style=\"top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);\"> \
-                                                            <div class=\"line\"></div> \
-                                                            <div class=\"triangle\"></div> \
-                                                                </div>' : '');
-                                }).join("\n");
-
-        var emptyTargetComponent = (droppedComponents[droppedComponents.length - 1].properties.connectedAfter ? 
-                                        '<div class=\"target-component-container\" style=\"top: calc(15% + ' + droppedComponents.length * 150 + 'px\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
-                                            <div role=\"target\" class=\"target-component-empty\"> \
-                                                <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img"\ xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
-                                                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
-                                                </svg> \
-                                            </div> \
-                                            <div class="whitespace"></div> \
-                                        </div>' : '');
-    
-        canvasAreaContainer.innerHTML = targetComponent + emptyTargetComponent;
+        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
     } else {
-        canvasAreaContainer.innerHTML = '<div class=\"target-component-container\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
-                                            <div role=\"target" class="target-component-empty\"> \
-                                                <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
-                                                <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
-                                                </svg> \
-                                            </div> \
-                                        </div>';
+        canvasAreaContainer.innerHTML = loadEmptyCanvas();
     }
-
 });
