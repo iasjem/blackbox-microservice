@@ -253,33 +253,43 @@ function changeItemFromArray (arr, indexInPosition, newData) {
     arr[indexInPosition]._id = _id;
 }
 
+function deleteItemFromArray (arr, _id) {
+    var currentIndex = findIndexFromArrayById(_id, arr);
+
+    return currentIndex > 0 ? arr.filter(item => item._id !== _id) : [];
+}
+
 function loadDroppedComponentsList (arr) {
-    var targetComponent = arr.map(function (component, index) {
-        var spaceBetweenComponents = index * 150;
-        var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
-
-        return '<div class="target-component-container with-component" id="' + component._id + '" style="top: calc(15% + ' + spaceBetweenComponents + 'px);" title="' + component.type + '" draggable="true" ondragstart="dragDroppedComponent(event)" ondragover="allowDropSource(event)" ondrop=\"dropToAnotherComponent(event)\"> \
-                    <div role="target" class="target-component"> \
-                        ' + component.logoName + ' \
-                        <span class="label">' + component.name + '</span> \
-                    </div> \
-                    ' + (component.properties.connectedAfter ? '' : '<div class="whitespace"></div>') + '</div>'
-                    + (index > 0 ? '<div class="target-component-arrow-down" style="top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);"> \
-                    <div class="line"></div> \
-                    <div class="triangle"></div> \
-                </div>' : '')}).join("\n");
-
-    var emptyTargetComponent = arr[arr.length - 1].properties.connectedAfter ? 
-                                '<div class="target-component-container" style="top: calc(15% + ' + arr.length * 150 + 'px" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
-                                        <div role="target" class="target-component-empty"> \
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
-                                            <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
-                                            </svg> \
-                                        </div> \
-                                        <div class="whitespace"></div> \
-                                    </div>' : '';
-
-    return targetComponent + emptyTargetComponent;
+    if (arr.length > 0) {
+        var targetComponent = arr.map(function (component, index) {
+            var spaceBetweenComponents = index * 150;
+            var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
+    
+            return '<div class="target-component-container with-component" id="' + component._id + '" style="top: calc(15% + ' + spaceBetweenComponents + 'px);" title="' + component.type + '" draggable="true" ondragstart="dragDroppedComponent(event)" ondragover="allowDropSource(event)" ondrop=\"dropToAnotherComponent(event)\"> \
+                        <div role="target" class="target-component"> \
+                            ' + component.logoName + ' \
+                            <span class="label">' + component.name + '</span> \
+                        </div> \
+                        ' + (component.properties.connectedAfter ? '' : '<div class="whitespace"></div>') + '</div>'
+                        + (index > 0 ? '<div class="target-component-arrow-down" style="top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);"> \
+                        <div class="line"></div> \
+                        <div class="triangle"></div> \
+                    </div>' : '')}).join("\n");
+    
+        var emptyTargetComponent = arr[arr.length - 1].properties.connectedAfter ? 
+                                    '<div class="target-component-container" style="top: calc(15% + ' + arr.length * 150 + 'px" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
+                                            <div role="target" class="target-component-empty"> \
+                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
+                                                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
+                                                </svg> \
+                                            </div> \
+                                            <div class="whitespace"></div> \
+                                        </div>' : '';
+    
+        return targetComponent + emptyTargetComponent;
+    } else {
+        return loadEmptyCanvas();
+    }
 }
 
 function loadEmptyCanvas () {
@@ -329,7 +339,7 @@ function searchComponentByKeyword (keyword) {
 function allowDropSource (e) {
     e.preventDefault();
 }
-  
+
 function dragSource (e) {
     e.dataTransfer.setData('source_component', e.target.id);
 }
@@ -398,6 +408,17 @@ function dropToAnotherComponent (e) {
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Cannot Change START/END components inside the canvas.');
+        }
+    }
+}
+
+function removeSelectedComponent (e) {
+    var selectedComponent = e.dataTransfer.getData('dropped_component');
+
+    if (selectedComponent && e.target.id === "canvas_area_container") {
+        if (confirm('Are you sure you want to remove this component from the canvas?')) {
+            droppedComponents = deleteItemFromArray(droppedComponents, selectedComponent);
+            canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         }
     }
 }
