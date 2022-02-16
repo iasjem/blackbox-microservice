@@ -246,6 +246,13 @@ function moveInArray (arr, from, to) {
     arr.splice(to, 0, item[0]);
 }
 
+function changeItemFromArray (arr, indexInPosition, newData) {
+    var _id = arr[indexInPosition]._id;
+
+    arr[indexInPosition] = newData;
+    arr[indexInPosition]._id = _id;
+}
+
 function loadDroppedComponentsList (arr) {
     var targetComponent = arr.map(function (component, index) {
         var spaceBetweenComponents = index * 150;
@@ -334,39 +341,64 @@ function dragDroppedComponent (e) {
 function dropToCanvas (e) {    
     e.preventDefault();
 
-    var droppedComponent = Object.keys(componentsList).flatMap(function (list) {
-                return [].concat(componentsList[list]);
-            }).filter(function (component) {
-                return component.type === e.dataTransfer.getData('source_component');
-            })[0];
+    var sourceComponent = e.dataTransfer.getData('source_component');
 
-    if ((droppedComponent.properties.startingComponent && droppedComponents.length < 1) || (!droppedComponent.properties.startingComponent && droppedComponents.length > 0)) {
-        droppedComponent._id = uuidv4();
+    if (sourceComponent) {
+        var droppedComponent = Object.keys(componentsList).flatMap(function (list) {
+            return [].concat(componentsList[list]);
+        }).filter(function (component) {
+            return component.type === sourceComponent;
+        })[0];
 
-        droppedComponents.push(droppedComponent);
+        if ((droppedComponent.properties.startingComponent && droppedComponents.length < 1) || (!droppedComponent.properties.startingComponent && droppedComponents.length > 0)) {
+            droppedComponent._id = uuidv4();
 
-        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+            droppedComponents.push(droppedComponent);
+
+            canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+        } else {
+            alert('Workflow must begin with a START component when there are no other components inside the canvas.');
+        }
     } else {
-        alert('Workflow must begin with a START component when there are no other components inside the canvas.');
+        alert('This container only accepts components from the components list tab');
     }
 }
 
 function dropToAnotherComponent (e) {
+    var sourceComponent = e.dataTransfer.getData('source_component');
+
     var componentInPosition = e.currentTarget.id;
     var componentInPositionIndex = findIndexFromArrayById(componentInPosition, droppedComponents);
     var componentInPositionProperties = droppedComponents[componentInPositionIndex].properties;
     var componentInPositionSortable = componentInPositionProperties.connectedAfter && componentInPositionProperties.connectedBefore;
-
     var selectedComponent = e.dataTransfer.getData('dropped_component');
-    var selectedComponentIndex = findIndexFromArrayById(selectedComponent, droppedComponents);
-    var selectedComponentProperties = droppedComponents[selectedComponentIndex].properties;
-    var selectedComponentSortable = selectedComponentProperties.connectedAfter && selectedComponentProperties.connectedBefore;
+
+    if (selectedComponent) {
+        var selectedComponentIndex = findIndexFromArrayById(selectedComponent, droppedComponents);
+        var selectedComponentProperties = droppedComponents[selectedComponentIndex].properties;
+        var selectedComponentSortable = selectedComponentProperties.connectedAfter && selectedComponentProperties.connectedBefore;
     
-    if (componentInPositionSortable && selectedComponentSortable) {
-        moveInArray(droppedComponents, selectedComponentIndex, componentInPositionIndex);
-        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
-    } else {
-        alert('Cannot sort START/END components inside the canvas.');
+        if (componentInPositionSortable && selectedComponentSortable) {
+            moveInArray(droppedComponents, selectedComponentIndex, componentInPositionIndex);
+            canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+        } else {
+            alert('Cannot sort START/END components inside the canvas.');
+        }
+    } else if (sourceComponent) {
+        var newData = Object.keys(componentsList).flatMap(function (list) {
+            return [].concat(componentsList[list]);
+        }).filter(function (component) {
+            return component.type === sourceComponent;
+        })[0];
+        var newDataProperties = newData.properties;
+        var newDataSortable = newDataProperties.connectedAfter && newDataProperties.connectedBefore;
+
+        if (componentInPositionSortable && newDataSortable) {
+            changeItemFromArray(droppedComponents, componentInPositionIndex, newData);
+            canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+        } else {
+            alert('Cannot Change START/END components inside the canvas.');
+        }
     }
 }
 
