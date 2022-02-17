@@ -28,12 +28,12 @@ html, body {
 .canvas-area-container {
     position: relative;
     height: 100%;
-    margin: 0 0 0 20%;
+    margin: 0 20%;
     padding: 0 16px;
 }
 
 .canvas-area-container-wide {
-    margin: 0 0 0 35px;
+    margin: 0 20% 0 35px;
     padding: 0 16px;
 }
 
@@ -104,6 +104,27 @@ html, body {
 
 .show-components-tab {
     width: 20%;
+}
+
+.canvas-component-settings-container {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    height: calc(100% - 55px);
+    overflow-y: auto;
+    border-left: solid 1px #C2C2C2;
+}
+
+.show-settings-tab {
+    width: 20%;
+    display: block;
+}
+
+.canvas-component-settings-container .info-message {
+    margin: 60px auto;
+    text-align: center;
+    font-size: 16px;
+    width: 80%;
 }
 
 .show-components-tab .components-tab-container {

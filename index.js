@@ -13,6 +13,7 @@ var canvasAreaContainer = document.getElementById('canvas_area_container');
 var searchBarIcon = document.getElementById('search_bar_icon');
 var saveProgressButton = document.getElementById('save_progress');
 var clearCanvasButton = document.getElementById('clear_canvas');
+var settingsTabContainer = document.getElementById('settings_tab_container');
 
 /** INITIALIZERS */
 var isSearching = false;
@@ -328,6 +329,14 @@ function loadComponentsListTab () {
     return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\">' + component + '</div>';
 }
 
+function loadSettingsTab () {
+    if (droppedComponents && droppedComponents.length > 0) {
+        return '<p class=\"info-message\">Select component to edit its parameters.</p>';
+    } else {
+        return '<p class=\"info-message\">Drop a component to canvas.</p>';
+    }
+}
+
 function searchComponentByKeyword (keyword) {
     return Object.keys(componentsList).flatMap(function (list) {
                 return [].concat(componentsList[list]);
@@ -365,6 +374,8 @@ function dropToCanvas (e) {
 
             droppedComponents.push(droppedComponent);
 
+            settingsTabContainer.innerHTML = loadSettingsTab();
+
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Workflow must begin with a START component when there are no other components inside the canvas.');
@@ -390,6 +401,7 @@ function dropToAnotherComponent (e) {
     
         if (componentInPositionSortable && selectedComponentSortable) {
             moveInArray(droppedComponents, selectedComponentIndex, componentInPositionIndex);
+            settingsTabContainer.innerHTML = loadSettingsTab();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Cannot sort START/END components inside the canvas.');
@@ -405,6 +417,7 @@ function dropToAnotherComponent (e) {
 
         if (componentInPositionSortable && newDataSortable) {
             changeItemFromArray(droppedComponents, componentInPositionIndex, newData);
+            settingsTabContainer.innerHTML = loadSettingsTab();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Cannot Change START/END components inside the canvas.');
@@ -493,6 +506,7 @@ clearCanvasButton.addEventListener('click', function (e) {
 
         droppedComponents = [];
 
+        settingsTabContainer.innerHTML = loadSettingsTab();
         canvasAreaContainer.innerHTML = loadEmptyCanvas();
     }
 });
@@ -502,6 +516,8 @@ document.addEventListener('DOMContentLoaded', function() {
     var currentProgress = JSON.parse(localStorage.getItem("blackbox_progress")); // get saved progress from localstorage
 
     componentsToggableTabContainer.innerHTML = loadComponentsListTab();
+
+    settingsTabContainer.innerHTML = loadSettingsTab();
 
     if (currentProgress && currentProgress.length > 0) {
         droppedComponents = currentProgress;
