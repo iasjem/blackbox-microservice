@@ -8,7 +8,7 @@ var toggleComponentTabButton = document.getElementById('toggle_component_tab_but
 var searchKeywordTextField = document.getElementById('search_keyword_text_field');
 var componentsToggableTabContainer = document.getElementById('components_toggable_tab_container');
 var noResultsFoundContainer = document.getElementById('no_results_found_container');
-var componentSearchListContainer = document.getElementById('component_search_list_container')
+var componentSearchListContainer = document.getElementById('component_search_list_container');
 var canvasAreaContainer = document.getElementById('canvas_area_container');
 var searchBarIcon = document.getElementById('search_bar_icon');
 var saveProgressButton = document.getElementById('save_progress');
@@ -173,7 +173,7 @@ var componentsList = {
             type: 'VIEW_BOOKING_RECAP_COMPONENT',
             name: 'Booking Recap',
             description: 'View Booking Recap',
-            logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"passport\" class=\"svg-inline--fa fa-passport fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg" viewBox=\"0 0 448 512\"> \
+            logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"passport\" class=\"svg-inline--fa fa-passport fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                             <path fill=\"currentColor\" d=\"M129.62 176h39.09c1.49-27.03 6.54-51.35 14.21-70.41-27.71 13.24-48.02 39.19-53.3 70.41zm0 32c5.29 31.22 25.59 57.17 53.3 70.41-7.68-19.06-12.72-43.38-14.21-70.41h-39.09zM224 286.69c7.69-7.45 20.77-34.42 23.43-78.69h-46.87c2.67 44.26 15.75 71.24 23.44 78.69zM200.57 176h46.87c-2.66-44.26-15.74-71.24-23.43-78.69-7.7 7.45-20.78 34.43-23.44 78.69zm64.51 102.41c27.71-13.24 48.02-39.19 53.3-70.41h-39.09c-1.49 27.03-6.53 51.35-14.21 70.41zM416 0H64C28.65 0 0 28.65 0 64v384c0 35.35 28.65 64 64 64h352c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32zm-80 416H112c-8.8 0-16-7.2-16-16s7.2-16 16-16h224c8.8 0 16 7.2 16 16s-7.2 16-16 16zm-112-96c-70.69 0-128-57.31-128-128S153.31 64 224 64s128 57.31 128 128-57.31 128-128 128zm41.08-214.41c7.68 19.06 12.72 43.38 14.21 70.41h39.09c-5.28-31.22-25.59-57.17-53.3-70.41z\"></path> \
                         </svg>',
             properties: {
@@ -188,9 +188,9 @@ var componentsList = {
             _id: 9,
             type: 'PAYMENT_WITH_PAYMAYA_COMPONENT',
             name: 'Payment',
-            description: "Payment with PayMaya",
+            description: 'Payment with PayMaya',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"credit-card\" class=\"svg-inline--fa fa-credit-card fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
-                            <path fill=\"currentColor\" d="M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z\"></path> \
+                            <path fill=\"currentColor\" d=\"M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z\"></path> \
                         </svg>',
             properties: {
                 startingComponent: false,
@@ -204,7 +204,7 @@ var componentsList = {
             _id: 10,
             type: 'CONFIRM_PAYMENT_WITH_PAYMAYA_COMPONENT',
             name: 'Confirm Payment',
-            description: "Confirm Payment with PayMaya",
+            description: 'Confirm Payment with PayMaya',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"credit-card\" class=\"svg-inline--fa fa-credit-card fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z\"></path> \
                         </svg>',
@@ -265,25 +265,25 @@ function loadDroppedComponentsList (arr) {
             var spaceBetweenComponents = index * 150;
             var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
     
-            return '<div class="target-component-container with-component" id="' + component._id + '" style="top: calc(15% + ' + spaceBetweenComponents + 'px);" title="' + component.type + '" draggable="true" ondragstart="dragDroppedComponent(event)" ondragover="allowDropSource(event)" ondrop=\"dropToAnotherComponent(event)\"> \
-                        <div role="target" class="target-component"> \
+            return '<div class=\"target-component-container with-component\" id=\"' + component._id + '\" style=\"top: calc(15% + ' + spaceBetweenComponents + 'px);\" title=\"' + component.type + '\" draggable=\"true\" ondragstart=\"dragDroppedComponent(event)\" ondragover=\"allowDropSource(event)\" ondrop=\"dropToAnotherComponent(event)\"> \
+                        <div role=\"target\" class=\"target-component\"> \
                             ' + component.logoName + ' \
-                            <span class="label">' + component.name + '</span> \
+                            <span class=\"label\">' + component.name + '</span> \
                         </div> \
-                        ' + (component.properties.connectedAfter ? '' : '<div class="whitespace"></div>') + '</div>'
-                        + (index > 0 ? '<div class="target-component-arrow-down" style="top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);"> \
-                        <div class="line"></div> \
-                        <div class="triangle"></div> \
-                    </div>' : '')}).join("\n");
+                        ' + (component.properties.connectedAfter ? '' : '<div class=\"whitespace\"></div>') + '</div>'
+                        + (index > 0 ? '<div class=\"target-component-arrow-down\" style=\"top: calc(14.8% + ' + arrowPositionBetweenComponents + 'px);\"> \
+                        <div class=\"line\"></div> \
+                        <div class=\"triangle\"></div> \
+                    </div>' : '')}).join('\n');
     
         var emptyTargetComponent = arr[arr.length - 1].properties.connectedAfter ? 
-                                    '<div class="target-component-container" style="top: calc(15% + ' + arr.length * 150 + 'px" ondrop="dropToCanvas(event)" ondragover="allowDropSource(event)"> \
-                                            <div role="target" class="target-component-empty"> \
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="plus" class="svg-inline--fa fa-plus fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"> \
-                                                <path fill="currentColor" d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path> \
+                                    '<div class=\"target-component-container\" style=\"top: calc(15% + ' + arr.length * 150 + 'px\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
+                                            <div role=\"target\" class=\"target-component-empty\"> \
+                                                <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
+                                                <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
                                                 </svg> \
                                             </div> \
-                                            <div class="whitespace"></div> \
+                                            <div class=\"whitespace\"></div> \
                                         </div>' : '';
     
         return targetComponent + emptyTargetComponent;
@@ -294,7 +294,7 @@ function loadDroppedComponentsList (arr) {
 
 function loadEmptyCanvas () {
     return '<div class=\"target-component-container\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
-                <div role=\"target" class="target-component-empty\"> \
+                <div role=\"target\" class=\"target-component-empty\"> \
                     <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                     <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
                     </svg> \
@@ -304,12 +304,12 @@ function loadEmptyCanvas () {
 
 function loadComponentsListTab () {
     var component = Object.keys(componentsList).map(function (list) {
-        var componentListCount = '<span class\="component-count\" id=\"component_list_count\">' + componentsList[list].length + '</span>';
+        var componentListCount = '<span class=\"component-count\" id=\"component_list_count\">' + componentsList[list].length + '</span>';
         var components = componentsList[list].map(function (component, i) {
-                                                    return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role="source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
+                                                    return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role=\"source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
                                                             ' + component.logoName + '<span class=\"label\">' + component.name + '</span> \
                                                         </div>';
-                                                }).join("\n");
+                                                }).join('\n');
 
             return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\"> \
                         <div class=\"component-header\" id=\"toggle_component_header_' + list + '\"> \
@@ -323,7 +323,7 @@ function loadComponentsListTab () {
                         </div> \
                         <div class=\"component-content show-components-list toggle_component_header_' + list + '\"> ' + components + ' </div> \
                     </div>';
-    }).join("\n"); 
+    }).join('\n'); 
 
     return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\">' + component + '</div>';
 }
@@ -457,7 +457,7 @@ searchKeywordTextField.addEventListener('keyup', function (e) {
                                                                 return '<div class="draggable-source-component" id="' + component.type + '" role="source" draggable="true" ondragstart="dragSource(event)" title="' + component.description + '"> \
                                                                             ' + component.logoName + ' <span class="label">' + component.name + '</span>\
                                                                         </div>';
-                                                             }).join("\n") + '</div>';
+                                                             }).join('\n') + '</div>';
         } else {
             componentSearchListContainer.innerHTML = '<div className="no-results-found-container" id="no_results_found_container" style="text-align: center; padding: 32px 16px;"> \
                                                             No Results found. \
