@@ -14,6 +14,7 @@ var searchBarIcon = document.getElementById('search_bar_icon');
 var saveProgressButton = document.getElementById('save_progress');
 var clearCanvasButton = document.getElementById('clear_canvas');
 var settingsTabContainer = document.getElementById('settings_tab_container');
+var targetComponents = document.querySelectorAll('.target-component-container');
 
 /** INITIALIZERS */
 var isSearching = false;
@@ -266,7 +267,7 @@ function loadDroppedComponentsList (arr) {
             var spaceBetweenComponents = index * 150;
             var arrowPositionBetweenComponents = index > 1 ? index * 80 + (index * 70 - 70) : index * 80;
     
-            return '<div class=\"target-component-container with-component\" id=\"' + component._id + '\" style=\"top: calc(15% + ' + spaceBetweenComponents + 'px);\" title=\"' + component.type + '\" draggable=\"true\" ondragstart=\"dragDroppedComponent(event)\" ondragover=\"allowDropSource(event)\" ondrop=\"dropToAnotherComponent(event)\"> \
+            return '<div class=\"target-component-container with-component\" id=\"' + component._id + '\" style=\"top: calc(15% + ' + spaceBetweenComponents + 'px);\" title=\"' + component.type + '\" draggable=\"true\" ondragstart=\"dragDroppedComponent(event)\" ondragover=\"allowDropSource(event)\" ondrop=\"dropToAnotherComponent(event)\" onclick=\"selectComponent(event)\"> \
                         <div role=\"target\" class=\"target-component\"> \
                             ' + component.logoName + ' \
                             <span class=\"label\">' + component.name + '</span> \
@@ -431,8 +432,29 @@ function removeSelectedComponent (e) {
     if (selectedComponent && e.target.id === "canvas_area_container") {
         if (confirm('Are you sure you want to remove this component from the canvas?')) {
             droppedComponents = deleteItemFromArray(droppedComponents, selectedComponent);
+            settingsTabContainer.innerHTML = loadSettingsTab();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         }
+    }
+}
+
+function unselectAllComponents (e) {
+    document.querySelectorAll('.with-component').forEach(function (component) {
+        if (component.classList.contains('selected-component')) {
+            component.classList.remove('selected-component');
+            settingsTabContainer.innerHTML = loadSettingsTab();
+        }
+    })
+}
+
+function selectComponent (e) {
+    var selectedComponent = e.currentTarget;
+
+    if (selectedComponent.classList.contains('selected-component')) {
+        selectedComponent.classList.remove('selected-component');
+    } else {
+        unselectAllComponents();
+        selectedComponent.classList.add('selected-component');
     }
 }
 
