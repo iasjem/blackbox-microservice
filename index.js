@@ -45,15 +45,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -76,15 +76,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         }
@@ -109,15 +109,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -140,15 +140,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -171,15 +171,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -202,15 +202,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -233,15 +233,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -264,15 +264,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -295,15 +295,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -326,15 +326,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -357,15 +357,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         },
@@ -388,15 +388,15 @@ var componentsList = {
             parameters: [
                 {
                     _id: 'parameter_1',
-                    name: "Parameter 1",
-                    type: "input_field",
-                    value: "Parameter 1 value"
+                    name: 'Parameter 1',
+                    type: 'input_field',
+                    value: 'Parameter 1 value'
                 },
                 {
                     _id: 'parameter_2',
-                    name: "Parameter 2",
-                    type: "input_field",
-                    value: "Parameter 2 value"
+                    name: 'Parameter 2',
+                    type: 'input_field',
+                    value: 'Parameter 2 value'
                 }
             ]
         }
@@ -686,7 +686,7 @@ function dropToAnotherComponent (e) {
 function removeSelectedComponent (e) {
     var selectedComponent = e.dataTransfer.getData('dropped_component');
 
-    if (selectedComponent && e.target.id === "canvas_area_container") {
+    if (selectedComponent && e.target.id === 'canvas_area_container') {
         if (confirm('Are you sure you want to remove this component from the canvas?')) {
             droppedComponents = deleteItemFromArray(droppedComponents, selectedComponent);
             settingsTabContainer.innerHTML = loadSettingsTab();
