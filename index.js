@@ -766,6 +766,7 @@ testcaseNameField.addEventListener('keyup', function (e) {
 
 saveProgressButton.addEventListener('click', function (e) {
     if (confirm('Are you sure you want to save your progress?')) {
+        var saved = [];
         var testcase = testcaseName ? testcaseName : (testcaseNameField.value ? testcaseNameField.value : 'Untitled');
         var ti_origin = testcaseOrigin ? testcaseOrigin : 'CEB';
         var ti_destination = testcaseDestination ? testcaseDestination : 'CEB';
@@ -780,15 +781,20 @@ saveProgressButton.addEventListener('click', function (e) {
             droppedComponents: droppedComponents
         };
 
-        localStorage.setItem('blackbox_progress', JSON.stringify(blackbox_progress, null, 2)); // Save to localstorage
+        saved.push(blackbox_progress);
+        localStorage.setItem('blackbox_progress', JSON.stringify(saved, null, 2));
     }
 });
 
 clearCanvasButton.addEventListener('click', function (e) {
     if (confirm('Are you sure you want to clear canvas?')) {
-        localStorage.removeItem('blackbox_progress'); // Remove from localstorage
+        localStorage.removeItem('blackbox_progress');
 
         droppedComponents = [];
+        testcaseNameField.value = 'Untitled';
+        testcaseName = null;
+        testcaseOrigin = null;
+        testcaseDestination = null;
 
         settingsTabContainer.innerHTML = loadSettingsTab();
         loadTestcaseSettingsForm();
@@ -798,7 +804,7 @@ clearCanvasButton.addEventListener('click', function (e) {
 
 /** PAGE LOAD INITIALIZATION */
 document.addEventListener('DOMContentLoaded', function() {
-    var currentProgress = JSON.parse(localStorage.getItem("blackbox_progress")); // get saved progress from localstorage
+    var currentProgress = JSON.parse(localStorage.getItem('blackbox_progress')) ? JSON.parse(localStorage.getItem('blackbox_progress'))[0] : null;
 
     componentsToggableTabContainer.innerHTML = loadComponentsListTab();
 
