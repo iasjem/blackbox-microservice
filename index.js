@@ -15,11 +15,13 @@ var saveProgressButton = document.getElementById('save_progress');
 var clearCanvasButton = document.getElementById('clear_canvas');
 var settingsTabContainer = document.getElementById('settings_tab_container');
 var targetComponents = document.querySelectorAll('.target-component-container');
+var testcaseNameField = document.getElementById('testcase_name');
 
 /** INITIALIZERS */
 var isSearching = false;
 var searchResult = null;
 var droppedComponents = [];
+var testcaseName, testcaseOrigin, testcaseDestination;
 
 /** CONSTANTS */
 var componentsList = {
@@ -28,6 +30,7 @@ var componentsList = {
             _id: 1,
             type: 'START_COMPONENT',
             name: 'Start',
+            action: 'start.csv',
             description: 'Start Workflow',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"play\" class=\"svg-inline--fa fa-play fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                             <path fill=\"currentColor\" d=\"M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z\"></path> \
@@ -38,12 +41,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: false,
                 canBeReplaced: false
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 2,
             type: 'END_COMPONENT',
             name: 'End',
+            action: 'exit.csv',
             description: 'End Workflow',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"stop\" class=\"svg-inline--fa fa-stop fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                         <path fill=\"currentColor\" d=\"M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z\"></path> \
@@ -54,7 +72,21 @@ var componentsList = {
                 connectedAfter: false,
                 connectedBefore: true,
                 canBeReplaced: false
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         }
     ],
     'FLIGHT_BOOKING': [
@@ -62,6 +94,7 @@ var componentsList = {
             _id: 1,
             type: 'ACCESS_HOME_PAGE_COMPONENT',
             name: 'Access Home',
+            action: 'homepage_anonymous.csv',
             description: 'Access Home Page',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"home\" class=\"svg-inline--fa fa-home fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                         <path fill=\"currentColor\" d=\"M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z\"></path> \
@@ -72,12 +105,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 2,
             type: 'SEARCH_FLIGHT_ONEWAY_COMPONENT',
             name: 'Search Flight',
+            action: 'searchflight_oneway_1000.csv',
             description: 'Search Flight (One-way)',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plane\" class=\"svg-inline--fa fa-plane fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z\"></path> \
@@ -88,12 +136,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 3,
             type: 'SELECT_FLIGHT_ONEWAY_COMPONENT',
             name: 'Select Flight',
+            action: 'selectflight_oneway.csv',
             description: 'Select Flight (One-way)',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plane\" class=\"svg-inline--fa fa-plane fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z\"></path> \
@@ -104,12 +167,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 4,
             type: 'SELECT_BUNDLES_GO_BASIC_COMPONENT',
             name: 'Select Bundles',
+            action: 'selectbundles_gobasic.csv',
             description: 'Select Bundles (GO BASIC)',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"gift\" class=\"svg-inline--fa fa-gift fa-w-16 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"> \
                             <path fill=\"currentColor\" d=\"M32 448c0 17.7 14.3 32 32 32h160V320H32v128zm256 32h160c17.7 0 32-14.3 32-32V320H288v160zm192-320h-42.1c6.2-12.1 10.1-25.5 10.1-40 0-48.5-39.5-88-88-88-41.6 0-68.5 21.3-103 68.3-34.5-47-61.4-68.3-103-68.3-48.5 0-88 39.5-88 88 0 14.5 3.8 27.9 10.1 40H32c-17.7 0-32 14.3-32 32v80c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16v-80c0-17.7-14.3-32-32-32zm-326.1 0c-22.1 0-40-17.9-40-40s17.9-40 40-40c19.9 0 34.6 3.3 86.1 80h-86.1zm206.1 0h-86.1c51.4-76.5 65.7-80 86.1-80 22.1 0 40 17.9 40 40s-17.9 40-40 40z\"></path> \
@@ -120,12 +198,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 5,
             type: 'REVIEW_FLIGHTS_COMPONENT',
             name: 'Review Flights',
+            action: 'reviewflights.csv',
             description: 'Review Flights',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plane\" class=\"svg-inline--fa fa-plane fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z\"></path> \
@@ -136,12 +229,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 6,
             type: 'VIEW_GUEST_DETAILS_COMPONENT',
             name: 'Guest Details',
+            action: 'guestdetails_1000.csv',
             description: 'View Guest Details',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"passport\" class=\"svg-inline--fa fa-passport fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                             <path fill=\"currentColor\" d=\"M129.62 176h39.09c1.49-27.03 6.54-51.35 14.21-70.41-27.71 13.24-48.02 39.19-53.3 70.41zm0 32c5.29 31.22 25.59 57.17 53.3 70.41-7.68-19.06-12.72-43.38-14.21-70.41h-39.09zM224 286.69c7.69-7.45 20.77-34.42 23.43-78.69h-46.87c2.67 44.26 15.75 71.24 23.44 78.69zM200.57 176h46.87c-2.66-44.26-15.74-71.24-23.43-78.69-7.7 7.45-20.78 34.43-23.44 78.69zm64.51 102.41c27.71-13.24 48.02-39.19 53.3-70.41h-39.09c-1.49 27.03-6.53 51.35-14.21 70.41zM416 0H64C28.65 0 0 28.65 0 64v384c0 35.35 28.65 64 64 64h352c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32zm-80 416H112c-8.8 0-16-7.2-16-16s7.2-16 16-16h224c8.8 0 16 7.2 16 16s-7.2 16-16 16zm-112-96c-70.69 0-128-57.31-128-128S153.31 64 224 64s128 57.31 128 128-57.31 128-128 128zm41.08-214.41c7.68 19.06 12.72 43.38 14.21 70.41h39.09c-5.28-31.22-25.59-57.17-53.3-70.41z\"></path> \
@@ -152,12 +260,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 7,
             type: 'SELECT_ADDONS_COMPONENT',
             name: 'Select Add-ons',
+            action: 'addons_0.csv',
             description: 'Select Add-ons',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                             <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
@@ -168,12 +291,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 8,
             type: 'VIEW_BOOKING_RECAP_COMPONENT',
             name: 'Booking Recap',
+            action: 'bookingrecap.csv',
             description: 'View Booking Recap',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"passport\" class=\"svg-inline--fa fa-passport fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                             <path fill=\"currentColor\" d=\"M129.62 176h39.09c1.49-27.03 6.54-51.35 14.21-70.41-27.71 13.24-48.02 39.19-53.3 70.41zm0 32c5.29 31.22 25.59 57.17 53.3 70.41-7.68-19.06-12.72-43.38-14.21-70.41h-39.09zM224 286.69c7.69-7.45 20.77-34.42 23.43-78.69h-46.87c2.67 44.26 15.75 71.24 23.44 78.69zM200.57 176h46.87c-2.66-44.26-15.74-71.24-23.43-78.69-7.7 7.45-20.78 34.43-23.44 78.69zm64.51 102.41c27.71-13.24 48.02-39.19 53.3-70.41h-39.09c-1.49 27.03-6.53 51.35-14.21 70.41zM416 0H64C28.65 0 0 28.65 0 64v384c0 35.35 28.65 64 64 64h352c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32zm-80 416H112c-8.8 0-16-7.2-16-16s7.2-16 16-16h224c8.8 0 16 7.2 16 16s-7.2 16-16 16zm-112-96c-70.69 0-128-57.31-128-128S153.31 64 224 64s128 57.31 128 128-57.31 128-128 128zm41.08-214.41c7.68 19.06 12.72 43.38 14.21 70.41h39.09c-5.28-31.22-25.59-57.17-53.3-70.41z\"></path> \
@@ -184,12 +322,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 9,
             type: 'PAYMENT_WITH_PAYMAYA_COMPONENT',
             name: 'Payment',
+            action: 'payment_paymaya.csv',
             description: 'Payment with PayMaya',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"credit-card\" class=\"svg-inline--fa fa-credit-card fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z\"></path> \
@@ -200,12 +353,27 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         },
         {
             _id: 10,
             type: 'CONFIRM_PAYMENT_WITH_PAYMAYA_COMPONENT',
             name: 'Confirm Payment',
+            action: 'confirmation_paymaya.csv',
             description: 'Confirm Payment with PayMaya',
             logoName: '<svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"credit-card\" class=\"svg-inline--fa fa-credit-card fa-w-18 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 576 512\"> \
                             <path fill=\"currentColor\" d=\"M0 432c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V256H0v176zm192-68c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-40zm-128 0c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM576 80v48H0V80c0-26.5 21.5-48 48-48h480c26.5 0 48 21.5 48 48z\"></path> \
@@ -216,7 +384,21 @@ var componentsList = {
                 connectedAfter: true,
                 connectedBefore: true,
                 canBeReplaced: true
-            }
+            },
+            parameters: [
+                {
+                    _id: 'parameter_1',
+                    name: "Parameter 1",
+                    type: "input_field",
+                    value: "Parameter 1 value"
+                },
+                {
+                    _id: 'parameter_2',
+                    name: "Parameter 2",
+                    type: "input_field",
+                    value: "Parameter 2 value"
+                }
+            ]
         }
     ]
 };
@@ -237,6 +419,18 @@ function uuidv4 () {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, function (c) {
         return (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16);
     });
+}
+
+function generateFormField (type, _id, name, value) {
+    switch(type) {
+        case 'input_field':
+        return '<div class=\"input-field-testcase\" id=\"testcase_origin\"> \
+                    <label>'+ name + '</label> \
+                    <input id=\"' + _id + '\" type=\"text\" value=\"' + value + '\" placeholder=\"' + name + '\" maxLength=\"24\" />\
+                </div>';
+        default:
+            return '';
+    }
 }
 
 function findIndexFromArrayById (id, arr) {
@@ -330,12 +524,51 @@ function loadComponentsListTab () {
     return '<div class=\"components-toggable-tab\" id=\"components_toggable_tab\">' + component + '</div>';
 }
 
-function loadSettingsTab () {
-    if (droppedComponents && droppedComponents.length > 0) {
-        return '<p class=\"info-message\">Select component to edit its parameters.</p>';
+function loadSettingsTab (parameters) {
+    var title = '<h3 class=\"title\">Config</h3>';
+
+    if (parameters) {
+        return title + '<div class=\"testcase-config-container\">' +
+                        parameters.map(param => generateFormField(param.type, param._id, param.name, param.value)).join('')  
+                + '</div>';
     } else {
-        return '<p class=\"info-message\">Drop a component to canvas.</p>';
+        var infoMessage = droppedComponents && droppedComponents.length > 0 ? '<p class=\"info-message\">Select a component to edit its parameters.</p>' : '<p class=\"info-message\">Drop a component to canvas.</p>';
+
+        return title + infoMessage + '<div class=\"testcase-config-container\"> \
+            <div class=\"input-field-testcase\"> \
+                <label>Origin</label> \
+                <input id=\"testcase_origin\" type=\"text\" value=\"'+ (testcaseOrigin ? testcaseOrigin : 'CEB') + '\" placeholder=\"Origin\" maxLength=\"24\" />\
+            </div> \
+            <div class=\"input-field-testcase\"> \
+                <label>Destination</label> \
+                <input id=\"testcase_destination\" type=\"text\" value=\"'+ (testcaseDestination ? testcaseDestination : 'CEB') + '\" placeholder=\"Destination\" maxLength=\"24\" />\
+            </div> \
+        </div>';
     }
+}
+
+function loadTestcaseSettingsForm () {
+    var testcaseOriginField = document.getElementById('testcase_origin');
+    var testcaseDestinationField = document.getElementById('testcase_destination');
+
+    testcaseOrigin = testcaseOriginField.value;
+    testcaseDestination = testcaseDestinationField.value;
+
+    testcaseOriginField.addEventListener('keyup', function (e) {
+        testcaseOrigin = e.currentTarget.value;
+    });
+
+    testcaseDestinationField.addEventListener('keyup', function (e) {
+        testcaseDestination = e.currentTarget.value;
+    });
+}
+
+function loadSelectedComponentSettingsForm (selectedComponent) {
+    selectedComponent.parameters.forEach(function (param) {
+        document.getElementById(param._id).addEventListener('keyup', function (e) {
+            param.value = e.currentTarget.value;
+        });
+    });
 }
 
 function searchComponentByKeyword (keyword) {
@@ -376,7 +609,7 @@ function dropToCanvas (e) {
             droppedComponents.push(droppedComponent);
 
             settingsTabContainer.innerHTML = loadSettingsTab();
-
+            loadTestcaseSettingsForm();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Workflow must begin with a START component when there are no other components inside the canvas.');
@@ -403,6 +636,7 @@ function dropToAnotherComponent (e) {
         if (componentInPositionSortable && selectedComponentSortable) {
             moveInArray(droppedComponents, selectedComponentIndex, componentInPositionIndex);
             settingsTabContainer.innerHTML = loadSettingsTab();
+            loadTestcaseSettingsForm();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Cannot sort START/END components inside the canvas.');
@@ -419,6 +653,7 @@ function dropToAnotherComponent (e) {
         if (componentInPositionSortable && newDataSortable) {
             changeItemFromArray(droppedComponents, componentInPositionIndex, newData);
             settingsTabContainer.innerHTML = loadSettingsTab();
+            loadTestcaseSettingsForm();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         } else {
             alert('Cannot Change START/END components inside the canvas.');
@@ -433,6 +668,7 @@ function removeSelectedComponent (e) {
         if (confirm('Are you sure you want to remove this component from the canvas?')) {
             droppedComponents = deleteItemFromArray(droppedComponents, selectedComponent);
             settingsTabContainer.innerHTML = loadSettingsTab();
+            loadTestcaseSettingsForm();
             canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
         }
     }
@@ -443,6 +679,7 @@ function unselectAllComponents (e) {
         if (component.classList.contains('selected-component')) {
             component.classList.remove('selected-component');
             settingsTabContainer.innerHTML = loadSettingsTab();
+            loadTestcaseSettingsForm();
         }
     })
 }
@@ -452,9 +689,16 @@ function selectComponent (e) {
 
     if (selectedComponent.classList.contains('selected-component')) {
         selectedComponent.classList.remove('selected-component');
+        settingsTabContainer.innerHTML = loadSettingsTab();
+        loadTestcaseSettingsForm();
     } else {
+        var _id = selectedComponent.id;
+        var index = findIndexFromArrayById(_id, droppedComponents);
+
         unselectAllComponents();
         selectedComponent.classList.add('selected-component');
+        settingsTabContainer.innerHTML = loadSettingsTab(droppedComponents[index].parameters);
+        loadSelectedComponentSettingsForm(droppedComponents[index]);
     }
 }
 
@@ -516,9 +760,27 @@ toggleComponentTabButton.addEventListener('click', function (e) {
     }
 });
 
+testcaseNameField.addEventListener('keyup', function (e) {
+    testcaseName = e.currentTarget.value;
+});
+
 saveProgressButton.addEventListener('click', function (e) {
     if (confirm('Are you sure you want to save your progress?')) {
-        localStorage.setItem('blackbox_progress', JSON.stringify(droppedComponents, null, 2)); // Save to localstorage
+        var testcase = testcaseName ? testcaseName : (testcaseNameField.value ? testcaseNameField.value : 'Untitled');
+        var ti_origin = testcaseOrigin ? testcaseOrigin : 'CEB';
+        var ti_destination = testcaseDestination ? testcaseDestination : 'CEB';
+
+        var blackbox_progress = {
+            testcase: testcase,
+            config: {
+                ti_origin: ti_origin,
+                ti_destination: ti_destination
+            },
+            actions: droppedComponents.map(component => component.action),
+            droppedComponents: droppedComponents
+        };
+
+        localStorage.setItem('blackbox_progress', JSON.stringify(blackbox_progress, null, 2)); // Save to localstorage
     }
 });
 
@@ -529,6 +791,7 @@ clearCanvasButton.addEventListener('click', function (e) {
         droppedComponents = [];
 
         settingsTabContainer.innerHTML = loadSettingsTab();
+        loadTestcaseSettingsForm();
         canvasAreaContainer.innerHTML = loadEmptyCanvas();
     }
 });
@@ -539,13 +802,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     componentsToggableTabContainer.innerHTML = loadComponentsListTab();
 
-    settingsTabContainer.innerHTML = loadSettingsTab();
+    if (currentProgress) {
+        testcaseName = currentProgress.testcase;
+        testcaseNameField.value = currentProgress.testcase;
+        testcaseOrigin = currentProgress.config.ti_origin;
+        testcaseDestination = currentProgress.config.ti_destination;
+        droppedComponents = currentProgress.droppedComponents;
 
-    if (currentProgress && currentProgress.length > 0) {
-        droppedComponents = currentProgress;
-
-        canvasAreaContainer.innerHTML = loadDroppedComponentsList(droppedComponents);
+        canvasAreaContainer.innerHTML = currentProgress.droppedComponents.length > 0 ? loadDroppedComponentsList(droppedComponents) : loadEmptyCanvas();
     } else {
         canvasAreaContainer.innerHTML = loadEmptyCanvas();
     }
+
+    settingsTabContainer.innerHTML = loadSettingsTab();
+
+    loadTestcaseSettingsForm();
 });
