@@ -571,6 +571,28 @@ function loadSelectedComponentSettingsForm (selectedComponent) {
     });
 }
 
+function loadCanvas () {
+    var currentProgress = JSON.parse(localStorage.getItem('blackbox_progress')) ? JSON.parse(localStorage.getItem('blackbox_progress'))[0] : null;
+
+    componentsToggableTabContainer.innerHTML = loadComponentsListTab();
+
+    if (currentProgress) {
+        testcaseName = currentProgress.testcase;
+        testcaseNameField.value = currentProgress.testcase;
+        testcaseOrigin = currentProgress.config.ti_origin;
+        testcaseDestination = currentProgress.config.ti_destination;
+        droppedComponents = currentProgress.droppedComponents;
+
+        canvasAreaContainer.innerHTML = currentProgress.droppedComponents.length > 0 ? loadDroppedComponentsList(droppedComponents) : loadEmptyCanvas();
+    } else {
+        canvasAreaContainer.innerHTML = loadEmptyCanvas();
+    }
+
+    settingsTabContainer.innerHTML = loadSettingsTab();
+
+    loadTestcaseSettingsForm();
+}
+
 function searchComponentByKeyword (keyword) {
     return Object.keys(componentsList).flatMap(function (list) {
                 return [].concat(componentsList[list]);
@@ -783,6 +805,8 @@ saveProgressButton.addEventListener('click', function (e) {
 
         saved.push(blackbox_progress);
         localStorage.setItem('blackbox_progress', JSON.stringify(saved, null, 2));
+
+        loadCanvas();
     }
 });
 
@@ -804,23 +828,5 @@ clearCanvasButton.addEventListener('click', function (e) {
 
 /** PAGE LOAD INITIALIZATION */
 document.addEventListener('DOMContentLoaded', function() {
-    var currentProgress = JSON.parse(localStorage.getItem('blackbox_progress')) ? JSON.parse(localStorage.getItem('blackbox_progress'))[0] : null;
-
-    componentsToggableTabContainer.innerHTML = loadComponentsListTab();
-
-    if (currentProgress) {
-        testcaseName = currentProgress.testcase;
-        testcaseNameField.value = currentProgress.testcase;
-        testcaseOrigin = currentProgress.config.ti_origin;
-        testcaseDestination = currentProgress.config.ti_destination;
-        droppedComponents = currentProgress.droppedComponents;
-
-        canvasAreaContainer.innerHTML = currentProgress.droppedComponents.length > 0 ? loadDroppedComponentsList(droppedComponents) : loadEmptyCanvas();
-    } else {
-        canvasAreaContainer.innerHTML = loadEmptyCanvas();
-    }
-
-    settingsTabContainer.innerHTML = loadSettingsTab();
-
-    loadTestcaseSettingsForm();
+    loadCanvas();
 });
