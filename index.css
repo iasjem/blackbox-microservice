@@ -207,12 +207,16 @@ html, body {
     width: 100%;
 }
 
-.canvas-component-sidebar-container .components-tab-container .search-container svg {
-    transform: rotate(90deg);
-    color: #A6ABAB;
+.canvas-component-sidebar-container .components-tab-container .search-container #search_bar_icon {
     position: absolute;
     right: 45px;
     top: 14px;
+}
+
+.canvas-component-sidebar-container .components-tab-container .search-container #search_bar_icon svg {
+    transform: rotate(90deg);
+    color: #A6ABAB;
+    width: 14px;
     height: 14px;
 }
 
