@@ -407,8 +407,9 @@ var componentsList = {
 if (!Array.prototype.flatMap) {
     function flatMap (f, ctx) {
       return this.reduce
-        ( (r, x, i, a) =>
-            r.concat(f.call(ctx, x, i, a))
+        ( function (r, x, i, a) {
+                r.concat(f.call(ctx, x, i, a));
+            }
         , []
         )
     }
@@ -434,7 +435,9 @@ function generateFormField (type, _id, name, value) {
 }
 
 function findIndexFromArrayById (id, arr) {
-    return arr.findIndex(component => component._id === id);
+    return arr.findIndex(function (component) {
+        return component._id === id;
+    });
 }
 
 function moveInArray (arr, from, to) {
@@ -452,7 +455,9 @@ function changeItemFromArray (arr, indexInPosition, newData) {
 function deleteItemFromArray (arr, _id) {
     var currentIndex = findIndexFromArrayById(_id, arr);
 
-    return currentIndex > 0 ? arr.filter(item => item._id !== _id) : [];
+    return currentIndex > 0 ? arr.filter(function (item) {
+        return item._id !== _id;
+    }) : [];
 }
 
 function loadDroppedComponentsList (arr) {
@@ -489,7 +494,7 @@ function loadDroppedComponentsList (arr) {
 }
 
 function loadEmptyCanvas () {
-    return '<div class=\"target-component-container\" ondrop=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
+    return '<div class=\"target-component-container\" ondrop=\"dropToCanvas(event)\" ondragend=\"dropToCanvas(event)\" ondragover=\"allowDropSource(event)\"> \
                 <div role=\"target\" class=\"target-component-empty\"> \
                     <svg aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"plus\" class=\"svg-inline--fa fa-plus fa-w-14 \" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"> \
                     <path fill=\"currentColor\" d=\"M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z\"></path> \
@@ -529,7 +534,10 @@ function loadSettingsTab (parameters) {
 
     if (parameters) {
         return title + '<div class=\"testcase-config-container\">' +
-                        parameters.map(param => generateFormField(param.type, param._id, param.name, param.value)).join('')  
+                        parameters.map(function (param) {
+                            return generateFormField(param.type, param._id, param.name, param.value);
+                        }).join('')
+                        
                 + '</div>';
     } else {
         var infoMessage = droppedComponents && droppedComponents.length > 0 ? '<p class=\"info-message\">Select a component to edit its parameters.</p>' : '<p class=\"info-message\">Drop a component to canvas.</p>';
@@ -799,7 +807,9 @@ saveProgressButton.addEventListener('click', function (e) {
                 ti_origin: ti_origin,
                 ti_destination: ti_destination
             },
-            actions: droppedComponents.map(component => component.action),
+            actions: droppedComponents.map(function(component) {
+                return component.action;
+            }),
             droppedComponents: droppedComponents
         };
 
