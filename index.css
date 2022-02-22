@@ -350,14 +350,18 @@ html, body {
 }
 
 .canvas-area-container .with-component {
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='4' stroke-dasharray='' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    background-image: none;
+    width: 180px;
+    height: 45px;
+    padding: 0;
+    border: 1px solid #BFBFBF;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
 }
 
 .canvas-area-container .selected-component {
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='8' stroke-dasharray='' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+    border: 1px solid #24323E;
 }
 
 .canvas-area-container .target-component {
@@ -365,22 +369,38 @@ html, body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-flow: column;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    align-items: stretch;
 }
 
 .canvas-area-container .target-component span {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
     font-size: 10px;
-    color: black;
     text-align: center;
 }
 
-.canvas-area-container .target-component svg {
-    height: 24px;
-    margin-bottom: 4px;
-    color: black;
+.canvas-area-container .target-component .logo {
+    padding: 8px 14px;
+    background-color: #1E539E;
+}
+
+.canvas-area-container .target-component .logo svg {
+    height: 18px;
+    color: #FFFFFF;
+}
+
+.canvas-area-container .target-component .label {
+    padding: 8px;
+    flex: 1;
+    -ms-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    font-size: 12px;
+    color: #000;
 }
 
 .canvas-area-container .target-component-empty {
@@ -409,9 +429,9 @@ html, body {
 
 .canvas-area-container .target-component-arrow-down .line {
     position: relative;
-    width: 3px;
-    height: 60px;
-    background-color: #000;
+    width: 1px;
+    height: 54px;
+    background-color: #BFBFBF;
     margin: auto;
 }
 
