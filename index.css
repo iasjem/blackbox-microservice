@@ -112,6 +112,7 @@ html, body {
 .component-search-list-container .component-content .draggable-source-component .logo svg {
     height: 16px;
     color: #FFFFFF;
+    fill: #FFFFFF;
 }
 
 .component-search-list-container .component-content .draggable-source-component .label {
@@ -324,6 +325,7 @@ html, body {
 .canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component .logo svg {
     height: 16px;
     color: #FFFFFF;
+    fill: #FFFFFF;
 }
 
 .canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component .label {
@@ -435,6 +437,7 @@ html, body {
 .canvas-area-container .target-component .logo svg {
     height: 18px;
     color: #FFFFFF;
+    fill: #FFFFFF;
 }
 
 .canvas-area-container .target-component .label {
