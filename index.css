@@ -73,7 +73,6 @@ html, body {
 
 .component-search-list-container .component-content {
     background-color: #FFFFFF;
-    padding: 14px;
     display: none;
     justify-content: space-evenly;
     flex-flow: row wrap;
@@ -81,9 +80,7 @@ html, body {
 }
 
 .component-search-list-container .show-components-list {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+    display: block;
 }
 
 .component-search-list-container .component-content .draggable-source-component {
@@ -91,20 +88,44 @@ html, body {
     display: -ms-flexbox;
     display: flex;
     flex-basis: 30%;
-    -ms-flex-flow: column;
-    flex-flow: column;
-    align-items: center;
-    padding: 8px;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    align-items: stretch;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
-    font-size: 12px;
-    text-align: center;
+    height: 48px;
+    border: 1px solid #BFBFBF;
 }
 
-.component-search-list-container .component-content .draggable-source-component svg {
-    height: 14px;
-    margin: 0 0 4px 0;
+.component-search-list-container .component-content .draggable-source-component .logo {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 24px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 14px;
+    background-color: #1E539E;
+}
+
+.component-search-list-container .component-content .draggable-source-component .logo svg {
+    height: 16px;
+    color: #FFFFFF;
+}
+
+.component-search-list-container .component-content .draggable-source-component .label {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    flex: 1;
+    -ms-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    font-size: 12px;
+    color: #000;
 }
 
 .component-search-list-container .no-results-found-container {
@@ -187,9 +208,11 @@ html, body {
 
 .show-components-tab .components-tab-container {
     display: block;
+    overflow-y: scroll;
 }
 
 .canvas-component-sidebar-container .components-tab-container .search-container {
+    position: relative;
     background-color: #FFFFFF;
     border-bottom: 1px solid #C2C2C2;
     display: -webkit-flex;
@@ -209,7 +232,7 @@ html, body {
 
 .canvas-component-sidebar-container .components-tab-container .search-container #search_bar_icon {
     position: absolute;
-    right: 45px;
+    right: 12px;
     top: 14px;
 }
 
@@ -262,17 +285,14 @@ html, body {
 
 .canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content {
     background-color: #FFFFFF;
-    padding: 14px;
     display: none;
     justify-content: space-evenly;
-    flex-flow: row wrap;
-    -ms-flex-flow: row wrap;
+    flex-flow: column;
+    -ms-flex-flow: column;
 }
 
 .canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .show-components-list {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+    display: block;
 }
 
 .canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component {
@@ -280,20 +300,44 @@ html, body {
     display: -ms-flexbox;
     display: flex;
     flex-basis: 30%;
-    -ms-flex-flow: column;
-    flex-flow: column;
-    align-items: center;
-    padding: 8px;
+    -ms-flex-flow: row;
+    flex-flow: row;
+    align-items: stretch;
     cursor: grab;
     cursor: -moz-grab;
     cursor: -webkit-grab;
-    font-size: 12px;
-    text-align: center;
+    height: 48px;
+    border: 1px solid #BFBFBF;
 }
 
-.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component svg {
-    height: 14px;
-    margin: 0 0 4px 0;
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component .logo  {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 24px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 14px;
+    background-color: #1E539E;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component .logo svg {
+    height: 16px;
+    color: #FFFFFF;
+}
+
+.canvas-component-sidebar-container .components-tab-container .components-toggable-tab-container .components-toggable-tab .component-content .draggable-source-component .label {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    flex: 1;
+    -ms-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    font-size: 12px;
+    color: #000;
 }
 
 .canvas-component-sidebar-container .toggable-menu {

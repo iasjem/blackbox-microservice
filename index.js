@@ -519,7 +519,7 @@ function loadComponentsListTab () {
         var componentListCount = '<span class=\"component-count\" id=\"component_list_count\">' + componentsList[list].length + '</span>';
         var components = componentsList[list].map(function (component, i) {
                                                     return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role=\"source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
-                                                            ' + component.logoName + '<span class=\"label\">' + component.name + '</span> \
+                                                            <span class=\"logo\" style=\"background-color:' + (component.logoBackgroundColor ? component.logoBackgroundColor : '#1E539E') + '\">' + component.logoName + '</span><span class=\"label\">' + component.name + '</span> \
                                                         </div>';
                                                 }).join('\n');
 
@@ -774,8 +774,8 @@ searchKeywordTextField.addEventListener('keyup', function (e) {
             noResultsFoundContainer.style.display = 'none';
             componentSearchListContainer.innerHTML = '<div class="component-content show-components-list">'
                                                              + searchResult.map(function (component) {
-                                                                return '<div class="draggable-source-component" id="' + component.type + '" role="source" draggable="true" ondragstart="dragSource(event)" title="' + component.description + '"> \
-                                                                            ' + component.logoName + ' <span class="label">' + component.name + '</span>\
+                                                                return '<div class=\"draggable-source-component\" id=\"' + component.type + '\" role=\"source\" draggable=\"true\" ondragstart=\"dragSource(event)\" title=\"' + component.description + '\"> \
+                                                                            <span class=\"logo\" style=\"background-color:' + component.logoBackgroundColor + '\">' + component.logoName + '</span><span class="label">' + component.name + '</span>\
                                                                         </div>';
                                                              }).join('\n') + '</div>';
         } else {
